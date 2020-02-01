@@ -1,0 +1,219 @@
+<mat-form-field>
+  <mat-label>Select Companyname</mat-label>
+  <mat-select (selectionChange)="serch($event)">
+  <mat-option *ngFor="let e of emparr" [value]='e.company_name' >{{e.company_name}}</mat-option>
+  </mat-select>
+</mat-form-field>
+
+
+ <table class="table table-striped">
+   <thead>
+    <tr>
+    <th>CompanyName</th>
+    <th>No. of Resurces</th>
+    <th>Exp Required</th>
+    <th>CTC</th>
+    <th>Position</th>
+    <th>Joining Criteria</th>
+    <th>Education Criteria</th>
+    <th>Followp</th>
+    <th>Bond</th>
+    <th>GST Number</th>
+    <th>Update</th>
+    <th>Delete</th>
+    
+</tr>
+</thead>
+<tbody>
+<ng-container *ngFor="let e of emparr">
+
+  <tr *ngIf= "e.company_name==company || company =='' ">
+
+<td>{{e.company_name}}</td>
+<td>{{e.noofresourses}}</td>
+<td>{{e.exp_required}}</td>
+<td>{{e.ctc}}</td>
+<td>
+<div [ngSwitch]= e.wposition>
+<div *ngSwitchCase="'0'" >FullStackDeveloper</div>
+<div *ngSwitchCase="'1'" >UI Developer</div>
+<div *ngSwitchCase="'2'" >Backend Developer</div>
+<div *ngSwitchCase="'3'" >Testing Engineer</div>
+</div>
+</td>
+<td>
+<div [ngSwitch]= e.joining_criteria>
+    <div *ngSwitchCase="'0'" >NO training direct joining</div>
+    <div *ngSwitchCase="'1'" >3 month Internship then joining</div>
+    </div>
+</td>
+<td>
+<div [ngSwitch]= e.edu_crt>
+    <div *ngSwitchCase="'0'" >BE</div>
+    <div *ngSwitchCase="'1'" >12TH</div>
+    <div *ngSwitchCase="'2'" >Other</div>
+    </div>
+</td>
+<td>{{e.follow_up}}</td>
+<td>{{e.bond}}</td>
+<td>{{e.gstnumber}}</td>
+
+
+<td>
+<button mat-icon-button color="accent" (click)="edit(e)" (click)= "openDialog()">
+  <mat-icon class="mat-18">system_update</mat-icon>
+</button>
+</td>
+
+<td>
+<button mat-icon-button color="warn" (click)="delete(e.did)">
+  <mat-icon class="mat-18">delete</mat-icon>
+</button>
+</td>
+
+</tr>
+</ng-container>
+</tbody>
+</table> 
+ 
+ 
+
+
+ <!-- <table mat-table [dataSource]="emparr"  class="mat-elevation-z8">
+   
+    <ng-container matColumnDef="CompanyName">
+      
+      <th mat-header-cell *matHeaderCellDef> CompanyName </th>
+      <td  mat-cell *matCellDef="let e" >
+       <div *ngIf= "e.company_name==company || company =='' ">
+       {{e.company_name}}
+       </div>
+       </td>
+      
+    </ng-container>
+    
+    <ng-container matColumnDef="No.Of Resources">
+     
+        <th mat-header-cell *matHeaderCellDef> No.Of Resources </th>
+        <td mat-cell *matCellDef="let e"> 
+          <div *ngIf= "e.company_name==company || company =='' ">
+          {{e.noofresourses}} 
+          </div>
+          </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Exp Required">
+        <th mat-header-cell *matHeaderCellDef> Exp Required </th>
+        <td mat-cell *matCellDef="let e">
+          <div *ngIf= "e.company_name==company || company =='' ">
+          {{e.exp_required}}
+          </div>
+          </td>
+      </ng-container>
+
+      <ng-container matColumnDef="CTC">
+        <th mat-header-cell *matHeaderCellDef> CTC </th>
+        <td mat-cell *matCellDef="let e">
+          <div *ngIf= "e.company_name==company || company =='' ">
+          {{e.ctc}}
+          </div>
+          </td>
+      </ng-container>
+
+      <ng-container matColumnDef="Position">
+        <th mat-header-cell *matHeaderCellDef> Position </th>
+        <td mat-cell *matCellDef="let e">  
+          <div *ngIf= "e.company_name==company || company =='' ">
+        <div [ngSwitch]= e.wposition>
+        <div *ngSwitchCase="'0'" >FullStackDeveloper</div>
+        <div *ngSwitchCase="'1'" >UI Developer</div>
+        <div *ngSwitchCase="'2'" >Backend Developer</div>
+        <div *ngSwitchCase="'3'" >Testing Engineer</div>
+        </div>
+
+        </div>
+    </td>
+
+    </ng-container>
+    <ng-container matColumnDef="Joining Criteria">
+        <th mat-header-cell *matHeaderCellDef> Joining Criteria </th>
+        <td mat-cell *matCellDef="let e">  
+          <div *ngIf= "e.company_name==company || company =='' ">
+            <div [ngSwitch]= e.joining_criteria>
+                <div *ngSwitchCase="'0'" >NO training direct joining</div>
+                <div *ngSwitchCase="'1'" >3 month Internship then joining</div>
+                </div>
+                </div>
+            </td>
+    </ng-container>
+    
+
+<ng-container matColumnDef="Education Criteria">
+    <th mat-header-cell *matHeaderCellDef> Education Criteria </th>
+    <td mat-cell *matCellDef="let e"> 
+      <div *ngIf= "e.company_name==company || company =='' "> 
+        <div [ngSwitch]= e.edu_crt>
+            <div *ngSwitchCase="'0'" >BE</div>
+            <div *ngSwitchCase="'1'" >12TH</div>
+            <div *ngSwitchCase="'2'" >Other</div>
+            </div>
+            </div>
+        </td>
+</ng-container>
+
+   <ng-container matColumnDef="Followp">
+      <th mat-header-cell *matHeaderCellDef > Followp </th>
+      <td mat-cell *matCellDef="let e">
+        <div *ngIf= "e.company_name==company || company =='' ">
+        {{e.follow_up}} 
+        </div>
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Bond">
+        <th mat-header-cell *matHeaderCellDef> Bond </th>
+        <td mat-cell *matCellDef="let e">
+          <div *ngIf= "e.company_name==company || company =='' ">
+          {{e.bond}} 
+          </div>
+          </td>
+      </ng-container>
+
+      <ng-container matColumnDef="GST Number">
+        <th mat-header-cell *matHeaderCellDef> GST Number </th>
+        <td mat-cell *matCellDef="let e"> 
+          <div *ngIf= "e.company_name==company || company =='' ">
+        {{e.gstnumber}} 
+        </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="update">
+        <th mat-header-cell *matHeaderCellDef> Update </th>
+        <td mat-cell *matCellDef="let element">
+          <div *ngIf= "element.company_name==company || company =='' ">
+        <button mat-icon-button color="accent" (click)="edit(element)" (click)= "openDialog()">
+              <mat-icon class="mat-18">system_update</mat-icon>
+          </button>
+          </div>
+        </td>
+      </ng-container>
+   
+      <ng-container matColumnDef="delete">
+          <th mat-header-cell *matHeaderCellDef> Delete </th>
+          <td mat-cell *matCellDef="let element">
+            <div *ngIf= "element.company_name==company || company =='' ">
+            <button mat-icon-button color="warn" (click)="delete(element.did)">
+                <mat-icon class="mat-18">delete</mat-icon>
+            </button>
+            </div>
+          </td>
+        </ng-container>
+
+     
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns">
+    </tr>
+ 
+
+  </table>  -->
